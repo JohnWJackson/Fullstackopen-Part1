@@ -7,7 +7,7 @@ const Button = (props) => (
 );
 
 const StatisticLine = (props) => (
-  <p>{props.text} {props.value}</p>
+  <td>{props.text} {props.value}</td>
 )
 
 const Header = (props) => (
@@ -18,14 +18,28 @@ const Statistics = ({good, neutral, bad}) => {
   const total = good + neutral + bad;
   if (total == 0) return <div><h4>No feedback given.</h4></div>
   return (
-    <div>
-      <StatisticLine text="good" value={good} />
-      <StatisticLine text="neutral" value={neutral} />
-      <StatisticLine text="bad" value={bad} />
-      <StatisticLine text="all" value={total} />
-      <StatisticLine text="average" value={(good + neutral - bad) / total} />
-      <StatisticLine text="positive" value={(good / total) * 100} />
-    </div>
+    <table>
+      <tbody>
+        <tr>
+          <StatisticLine text="good" value={good} />
+        </tr>
+        <tr>
+          <StatisticLine text="neutral" value={neutral} />
+        </tr>
+        <tr>
+          <StatisticLine text="bad" value={bad} />
+        </tr>
+        <tr>
+          <StatisticLine text="all" value={total} />
+        </tr>
+        <tr>
+          <StatisticLine text="average" value={(good + neutral - bad) / total} />
+        </tr>
+        <tr>
+          <StatisticLine text="positive" value={(good / total) * 100} />
+        </tr>
+      </tbody>
+    </table>
   );
 }
 
