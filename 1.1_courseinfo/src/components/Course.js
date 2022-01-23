@@ -4,7 +4,7 @@ import Total from './Total'
 
 const Course = (props) => {
   const { course } = props;
-  course.parts.map(p => console.log(p.name));
+  //course.parts.map(p => console.log(p.name));
   return (
     <div>
       <Header course={course} />
