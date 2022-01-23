@@ -6,6 +6,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -16,13 +17,22 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients'
   ]
-   
-  const [selected, setSelected] = useState(0)
+  
+  const handleVotes = () => {
+    const votesCopy = [...vote];
+    votesCopy[selected] += 1;
+    setVote(votesCopy);
+  };
+
+  const [selected, setSelected] = useState(0);
+  const [vote, setVote] = useState(Array(anecdotes.length).fill(0));
 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
+      <p>{vote[selected]}</p>
       <button onClick={() => setSelected(getRandomInt(0, 6))}>Next Anecdote</button>
+      <button onClick={() => handleVotes()}>Vote</button>
     </div>
   )
 }
