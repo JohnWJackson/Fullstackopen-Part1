@@ -6,6 +6,11 @@ const Person = ({person}) => {
   );
 };
 
+const isDuplicate = (personNew, personOld) => {
+  return personNew.name == personOld.name;
+}
+
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
@@ -21,9 +26,19 @@ const App = () => {
     const personObject = {
       name: newName,
     };
-  
-    setPersons(persons.concat(personObject));
-    setNewName('');
+
+    let duplicate = false;
+    persons.forEach(p => {
+      if(isDuplicate(personObject, p)) {
+        duplicate = true;
+        alert(`${personObject.name} is already added to phonebook.`)
+      }
+    })
+
+    if (!duplicate) {
+      setPersons(persons.concat(personObject));
+      setNewName('');
+    }
   }
 
   return (
