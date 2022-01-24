@@ -1,4 +1,5 @@
 const Part = (part) => {
+  //console.log(part.name);
   return (
     <p>
       {part.name} {part.exercises}
@@ -8,12 +9,15 @@ const Part = (part) => {
 
 
 const Content = (props) => {
+  //console.log(props.parts);
   const { parts } = props.parts;
   return (
     <div>
-      {Part(parts[0])}
-      {Part(parts[1])}
-      {Part(parts[2])}
+      {parts.map(part => 
+        <div key={part.id}>
+          {Part(part)}
+        </div>
+      )}
     </div>
   );
 };

@@ -5,9 +5,9 @@ const calcTotal = ({parts}) =>
 
 const Total = (props) => {
   return (
-    <p>
+    <h4>
       Number of exercises {calcTotal(props.parts)}
-    </p>
+    </h4>
   );
 };
 
