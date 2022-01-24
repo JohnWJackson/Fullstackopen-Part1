@@ -1,15 +1,5 @@
 import React, { useState } from 'react'
-
-const Person = ({person}) => {
-  return (
-    <li>{person.name} {person.number}</li>
-  );
-};
-
-const isDuplicate = (personNew, personOld) => {
-  return personNew.name == personOld.name;
-}
-
+import Person, { isDuplicate } from './components/person'
 
 const App = () => {
   const [persons, setPersons] = useState([
