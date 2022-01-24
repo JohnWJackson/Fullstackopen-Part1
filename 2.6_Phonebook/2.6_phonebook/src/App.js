@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const Person = ({person}) => {
   return (
-    <li>{person.name}</li>
+    <li>{person.name} {person.number}</li>
   );
 };
 
@@ -13,18 +13,26 @@ const isDuplicate = (personNew, personOld) => {
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas',
+      number: '718-619-6502'
+    }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value);
   }
 
   const addPerson = (event) => {
     event.preventDefault();
     const personObject = {
       name: newName,
+      number: newNumber,
     };
 
     let duplicate = false;
@@ -41,6 +49,10 @@ const App = () => {
     }
   }
 
+  const addNumber = (event) => {
+
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -50,6 +62,12 @@ const App = () => {
                   value={newName}
                   onChange={handlePersonChange}
                 />
+        </div>
+        <div>
+          number: <input 
+                  value={newNumber}
+                  onChange={handleNumberChange}
+                  />
         </div>
         <div>
           <button type="submit">add</button>
