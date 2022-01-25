@@ -1,11 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
-
-const Country = ({country}) => {
-  return (
-    <li>{country.name.common}</li>
-  );
-};
+import Filter from './component/Filter';
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -25,7 +20,7 @@ function App() {
 
   const searchFilter = countries.filter(country => country.name.common
                                                   .toLowerCase()
-                                                  .includes(search));
+                                                  .includes(search.toLowerCase()));
 
   return (
     <div>
@@ -35,13 +30,7 @@ function App() {
                         onChange={handleSearch}
                       />
       </div>
-      <ul>
-        {searchFilter.map(country => 
-          <Country key={country.name.common} 
-                        country={country} />
-        )}
-      </ul>
-
+      <Filter searchFilter={searchFilter} />
     </div>
   );
 }
