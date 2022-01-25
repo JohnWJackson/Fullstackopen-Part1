@@ -3,13 +3,23 @@ import Person, { isDuplicate } from './components/person'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas',
+    { name: 'Arto',
+      number: '718-518-4312'
+    },
+    { name: 'John',
       number: '718-619-6502'
-    }
+    },
+    { name: 'Elsie',
+      number: '201-210-2521'
+    },
+    { name: 'Nemo',
+      number: '718-619-5432'
+    },
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
+  const [search, setNewSearch] = useState('');
+  
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
   }
@@ -39,13 +49,24 @@ const App = () => {
     }
   }
 
-  const addNumber = (event) => {
-
+  const personSearch = (event) => {
+    setNewSearch(event.target.value);       
   }
+
+  const searchFilter = persons.filter(p => p.name
+                                            .toLowerCase()
+                                            .includes(search));
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <div>
+        filter shown with <input 
+                            value={search}
+                            onChange={personSearch}
+                          />
+      </div>
+      <h2>Add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input 
@@ -65,7 +86,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map(p => 
+        {searchFilter.map(p => 
           <Person key={p.name} person={p} />
         )}
       </ul>
