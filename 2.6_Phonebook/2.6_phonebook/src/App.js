@@ -1,27 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { isDuplicate } from './components/Person'
+import axios from 'axios'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto',
-      number: '718-518-4312'
-    },
-    { name: 'John',
-      number: '718-619-6502'
-    },
-    { name: 'Elsie',
-      number: '201-210-2521'
-    },
-    { name: 'Nemo',
-      number: '718-619-5432'
-    },
-  ]) 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+  const [persons, setPersons] = useState([]);
+  const [newName, setNewName] = useState('');
+  const [newNumber, setNewNumber] = useState('');
   const [search, setNewSearch] = useState('');
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data);
+      })
+  }, []);
   
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
