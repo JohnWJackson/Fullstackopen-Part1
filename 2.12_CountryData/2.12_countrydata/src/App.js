@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import Filter from './component/Filter';
+import Countries from './component/Countries'
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -24,12 +25,7 @@ function App() {
 
   return (
     <div>
-      <div>
-        find countries <input 
-                        value={search}
-                        onChange={handleSearch}
-                      />
-      </div>
+      <Countries search={search} handleSearch={handleSearch} />
       <Filter searchFilter={searchFilter} />
     </div>
   );
