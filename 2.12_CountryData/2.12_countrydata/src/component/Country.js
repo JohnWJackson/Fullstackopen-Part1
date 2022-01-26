@@ -1,6 +1,6 @@
 const Country = ({country}) => {
   return (
-    <li>{country.name.common}</li>
+    <p>{country.name.common}</p>
   );
 };
 

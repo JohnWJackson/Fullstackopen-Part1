@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from 'react';
 import Filter from './component/Filter';
 import Countries from './component/Countries'
+import Display from './component/Display'
 
 function App() {
   const [countries, setCountries] = useState([]);
@@ -21,8 +22,9 @@ function App() {
 
   const searchFilter = countries.filter(country => country.name.common
                                                   .toLowerCase()
-                                                  .includes(search.toLowerCase()));
-
+                                                  .includes(search.toLowerCase())
+  );
+  
   return (
     <div>
       <Countries search={search} handleSearch={handleSearch} />
