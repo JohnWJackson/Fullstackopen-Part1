@@ -1,6 +1,9 @@
+import { handleButton } from "./Button";
+import Button from "./Button";
+
 const Country = ({country}) => {
   return (
-    <p>{country.name.common}</p>
+      country.name.common + ' '
   );
 };
 

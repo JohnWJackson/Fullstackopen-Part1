@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import Filter from './component/Filter';
-import Countries from './component/Countries'
-import Display from './component/Display'
+import Countries from './component/Countries';
+import Button from "./component/Button";
 
 function App() {
   const [countries, setCountries] = useState([]);

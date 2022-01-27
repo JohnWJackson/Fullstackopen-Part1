@@ -1,32 +1,29 @@
 import Country from "./Country";
+import Display from "./Display";
+import Button from "./Button";
+import { handleButton } from "./Button";
 
 const Filter = ({searchFilter}) => {
   if (searchFilter.length == 1) {
-    const country = searchFilter[0];
-    const languagesArr = Object.values(country.languages);
-    console.log(country);
-    
-    
-    
+    return <Display country={searchFilter[0]} />
+  }
+
+  if (searchFilter.length > 9) {
     return (
-    <div>
-      <h1> {country.name.common} </h1>
-      <p> capital: {country.capital[0]} </p>
-      <p> population: {country.population} </p>
-      <h2> Languages </h2>
-      <ul> 
-        {languagesArr.reduce(l => <li>{l}</li>)} 
-      </ul>
-      <img src={country.flags.png}></img>
-    </div>
+    <p> Too many matches, specify another filter </p>
     )
   }
   return (
     <div>
-      {searchFilter.length > 9 
-      ? "Too many matches, specify another filter" 
-      : searchFilter.map(country => 
-        <Country key={country.name.common} country={country} /> )}
+      {searchFilter.map(country => {
+        return (
+        <div key={country.name.common}>
+          <Country country={country} />
+          <button onClick={() => handleButton(country)} type="button">Show</button>
+        </div>
+        )
+      }
+      )}
     </div>
   )
 }
