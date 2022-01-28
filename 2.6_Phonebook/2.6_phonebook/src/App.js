@@ -11,11 +11,13 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [search, setNewSearch] = useState('');
 
-  axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data);
-  });
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
   
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
@@ -45,8 +47,12 @@ const App = () => {
     })
 
     if (!duplicate) {
-      setPersons(persons.concat(personObject));
-      setNewName('');
+      // axios
+      //   .post('http://localhost:3001/persons', personObject)
+      //   .then(response => {
+      // setPersons(persons.concat(response.data));
+      // setNewName('');
+      // })
     }
   }
 
