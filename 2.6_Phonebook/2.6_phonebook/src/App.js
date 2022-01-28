@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { isDuplicate } from './components/Person'
-import axios from 'axios'
+import personsService from './services/persons'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
@@ -12,8 +12,8 @@ const App = () => {
   const [search, setNewSearch] = useState('');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
+    personsService
+      .getAll()
       .then(response => {
         setPersons(response.data)
       })
@@ -47,8 +47,8 @@ const App = () => {
     })
 
     if (!duplicate) {
-      axios
-        .post('http://localhost:3001/persons', personObject)
+      personsService 
+        .create(personObject)
         .then(response => {
       setPersons(persons.concat(response.data));
       setNewName('');
