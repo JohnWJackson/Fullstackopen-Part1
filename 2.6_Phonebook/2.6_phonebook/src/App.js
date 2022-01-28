@@ -47,12 +47,12 @@ const App = () => {
     })
 
     if (!duplicate) {
-      // axios
-      //   .post('http://localhost:3001/persons', personObject)
-      //   .then(response => {
-      // setPersons(persons.concat(response.data));
-      // setNewName('');
-      // })
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then(response => {
+      setPersons(persons.concat(response.data));
+      setNewName('');
+      })
     }
   }
 
