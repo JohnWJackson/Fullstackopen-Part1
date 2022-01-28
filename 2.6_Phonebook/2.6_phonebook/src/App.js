@@ -56,6 +56,14 @@ const App = () => {
     }
   }
 
+  const deletePerson = (event) => {
+    personsService
+      .deletePersons(event)
+      .then(response => {
+        setPersons(persons.filter(p => p.id !== event))
+      })
+  }
+
   const searchFilter = persons.filter(p => p.name
                                             .toLowerCase()
                                             .includes(search)
@@ -74,7 +82,8 @@ const App = () => {
                   handleNumberChange={handleNumberChange} />
 
       <h2>Numbers</h2>
-      <Persons searchFilter={searchFilter} />
+      <Persons searchFilter={searchFilter}
+               deletePerson={deletePerson} />
     </div>
   )
 }
