@@ -11,13 +11,11 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [search, setNewSearch] = useState('');
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data);
-      })
-  }, []);
+  axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      setPersons(response.data);
+  });
   
   const handlePersonChange = (event) => {
     setNewName(event.target.value);
