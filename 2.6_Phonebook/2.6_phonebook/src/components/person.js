@@ -1,9 +1,10 @@
 const Person = ({person, deletePerson}) => {
   return (
     <li>
-      {person.name} 
+      {person.name}
+      {' - '}
       {person.number}
-      <button type="button" onClick={deletePerson.bind(this, person.id)}>Delete</button>
+      <button type="button" onClick={deletePerson.bind(this, person)}>Delete</button>
     </li>
   );
 };
