@@ -42,7 +42,17 @@ const App = () => {
     persons.forEach(p => {
       if(isDuplicate(personObject, p)) {
         duplicate = true;
-        alert(`${personObject.name} is already added to phonebook.`)
+        if (window.confirm(`${p.name} is already added to phonebook, replace the old number with a new one?`)) {
+          personsService
+            .update(p.id, personObject)
+            .then(response => {
+              setPersons(persons.filter(p => p.id !== response.data.id));
+              console.log(persons);
+              window.location.reload(false);
+              setNewName('');
+              setNewNumber('');
+          })
+        }
       }
     })
 
@@ -50,14 +60,15 @@ const App = () => {
       personsService 
         .create(personObject)
         .then(response => {
-      setPersons(persons.concat(response.data));
-      setNewName('');
+          setPersons(persons.concat(response.data));
+          setNewName('');
+          setNewNumber('');
       })
     }
   }
 
   const deletePerson = (event) => {
-    if(window.confirm(`Delete ${event.name}?`))
+    if (window.confirm(`Delete ${event.name}?`))
     {
       personsService
         .deletePersons(event.id)
