@@ -11,7 +11,8 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setNewSearch] = useState('');
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     personsService
@@ -68,7 +69,7 @@ const App = () => {
           setNewNumber('');
         })
         .catch(error => {
-          setMessage(`${newPersonObject.name} was already deleted from the server`);
+          setError(`${newPersonObject.name} was already deleted from the server`);
           setPersons(persons.filter(p => p.id !== newPersonObject.id));
       })
       setTimeout(() => {setMessage(null)}, 5000);
@@ -95,6 +96,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message} />
+      <Notification message={error} error={true} />
       <Filter search={search} handleSearch={handleSearch} />
 
       <h2>Add a new</h2>
