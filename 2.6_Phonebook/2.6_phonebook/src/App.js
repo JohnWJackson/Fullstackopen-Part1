@@ -44,31 +44,34 @@ const App = () => {
     if (duplicatePerson) {
       editPerson(personObject, duplicatePerson);
     }
-    else {
+    else { // Not a duplicate
       setMessage(`Added ${personObject.name}`);
       setTimeout(() => {setMessage(null)}, 5000);
-      personsService 
+      personsService
         .create(personObject)
         .then(response => {
           setPersons(persons.concat(response.data));
           setNewName('');
           setNewNumber('');
-      })
+        })
     }
   }
 
   const editPerson = (newPersonObject, oldPerson) => {
     if (window.confirm(`${oldPerson.name} is already added to phonebook, replace the old number with a new one?`)) {
-      setMessage(`Edited ${oldPerson.name}'s number to ${newPersonObject.number}`);
-      setTimeout(() => {setMessage(null)}, 5000);
       personsService
         .update(oldPerson.id, newPersonObject)
         .then(response => {
-          setPersons(persons.filter(p => p.id !== response.data.id));
-          // window.location.reload(false);
+          setMessage(`Edited ${oldPerson.name}'s number to ${newPersonObject.number}`);
+          setPersons(persons.map(p => p.id !== response.data.id ? p : response.data));
           setNewName('');
           setNewNumber('');
+        })
+        .catch(error => {
+          setMessage(`${newPersonObject.name} was already deleted from the server`);
+          setPersons(persons.filter(p => p.id !== newPersonObject.id));
       })
+      setTimeout(() => {setMessage(null)}, 5000);
     }
   }
 
