@@ -4,12 +4,14 @@ import personsService from './services/persons'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setNewSearch] = useState('');
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     personsService
@@ -38,29 +40,32 @@ const App = () => {
       number: newNumber,
     };
 
-    let duplicate = false;
-    persons.forEach(p => {
-      if(isDuplicate(personObject, p)) {
-        duplicate = true;
-        if (window.confirm(`${p.name} is already added to phonebook, replace the old number with a new one?`)) {
-          personsService
-            .update(p.id, personObject)
-            .then(response => {
-              setPersons(persons.filter(p => p.id !== response.data.id));
-              console.log(persons);
-              window.location.reload(false);
-              setNewName('');
-              setNewNumber('');
-          })
-        }
-      }
-    })
-
-    if (!duplicate) {
+    const duplicatePerson = persons.find(p => p.name === personObject.name);
+    if (duplicatePerson) {
+      editPerson(personObject, duplicatePerson);
+    }
+    else {
+      setMessage(`Added ${personObject.name}`);
+      setTimeout(() => {setMessage(null)}, 5000);
       personsService 
         .create(personObject)
         .then(response => {
           setPersons(persons.concat(response.data));
+          setNewName('');
+          setNewNumber('');
+      })
+    }
+  }
+
+  const editPerson = (newPersonObject, oldPerson) => {
+    if (window.confirm(`${oldPerson.name} is already added to phonebook, replace the old number with a new one?`)) {
+      setMessage(`Edited ${oldPerson.name}'s number to ${newPersonObject.number}`);
+      setTimeout(() => {setMessage(null)}, 5000);
+      personsService
+        .update(oldPerson.id, newPersonObject)
+        .then(response => {
+          setPersons(persons.filter(p => p.id !== response.data.id));
+          // window.location.reload(false);
           setNewName('');
           setNewNumber('');
       })
@@ -86,6 +91,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter search={search} handleSearch={handleSearch} />
 
       <h2>Add a new</h2>

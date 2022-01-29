@@ -9,9 +9,4 @@ const Person = ({person, deletePerson}) => {
   );
 };
 
-const isDuplicate = (personNew, personOld) => {
-  return personNew.name == personOld.name;
-}
-
 export default Person;
-export {isDuplicate};
