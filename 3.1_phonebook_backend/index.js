@@ -1,7 +1,10 @@
-const express = require('express')
+const express = require('express');
+const res = require('express/lib/response');
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json());
+app.use(morgan('tiny'));
 
 let persons = [
     { 
@@ -43,6 +46,7 @@ app.get('/api/persons/:id', (request, response) => {
   const id = Number(request.params.id);
   const person = persons.find(p => p.id === id);
   if (person) {
+    // res.send(`person ${id} retrieved`)
     response.json(person);
   } else {
     response.status(404).end();
@@ -86,7 +90,6 @@ app.post('/api/persons', (request, response) => {
 
   response.json(personObject);
 })
-
 
 
 const PORT = 3001
